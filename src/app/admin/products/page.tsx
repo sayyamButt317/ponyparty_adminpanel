@@ -14,7 +14,8 @@ export default function AdminProductsPage() {
                     <Link href="/admin/products/new">Add Product</Link>
                 </Button>
             </div>
-            <ProductTable />
+            <div className="px-6"> <ProductTable /></div>
+           
         </>
     )
 }
