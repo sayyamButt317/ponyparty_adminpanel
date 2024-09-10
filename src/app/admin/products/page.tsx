@@ -14,6 +14,7 @@ import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 
 export default function AdminProductsPage() {
+
   return (
     <>
       <div className="flex justify-between items-center gap-4">
@@ -25,6 +26,20 @@ export default function AdminProductsPage() {
       <ProductTable />
     </>
   );
+
+    return (
+        <>
+            <div className="flex justify-between items-center gap-4">
+                <PageHeader>Products</PageHeader>
+                <Button asChild>
+                    <Link href="/admin/products/new">Add Product</Link>
+                </Button>
+            </div>
+            <div className="px-6"> <ProductTable /></div>
+           
+        </>
+    )
+
 }
 
 async function ProductTable() {
