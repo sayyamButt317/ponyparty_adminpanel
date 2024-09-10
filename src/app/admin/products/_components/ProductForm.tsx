@@ -11,7 +11,8 @@ import { useFormState, useFormStatus } from "react-dom";
 export function ProductForm() {
     const [error, action] = useFormState(addProduct, {})
     const [priceInCents, setpriceInCents] = useState<number>()
-    return <form action={action} className="space-y-8">
+    return(
+     <form action={action} className="space-y-8 px-6">
         <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input type="text" id="name" name="name" required />
@@ -44,6 +45,7 @@ export function ProductForm() {
             < SubmitButton />
         </div>
     </form>
+    )
 }
 
 function SubmitButton() {
