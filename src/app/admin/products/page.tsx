@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { PageHeader } from "../_component/PageHeader";
 import Link from "next/link";
 import db from "@/db/db";
+
 import {
   Table,
   TableBody,
@@ -10,11 +11,18 @@ import {
   TableRow,
   TableCell,
 } from "@/components/ui/table";
+
 import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 
-export default function AdminProductsPage() {
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 
+export default function AdminProductsPage() {
   return (
     <>
       <div className="flex justify-between items-center gap-4">
@@ -26,20 +34,6 @@ export default function AdminProductsPage() {
       <ProductTable />
     </>
   );
-
-    return (
-        <>
-            <div className="flex justify-between items-center gap-4">
-                <PageHeader>Products</PageHeader>
-                <Button asChild>
-                    <Link href="/admin/products/new">Add Product</Link>
-                </Button>
-            </div>
-            <div className="px-6"> <ProductTable /></div>
-           
-        </>
-    )
-
 }
 
 async function ProductTable() {
@@ -65,7 +59,7 @@ async function ProductTable() {
           <TableHead>Price</TableHead>
           <TableHead>Orders</TableHead>
           <TableHead className="w-0">
-            <span className="sr-only">Actons</span>
+            <span className="sr-only">Actions</span>
           </TableHead>
         </TableRow>
       </TableHeader>
@@ -80,16 +74,37 @@ async function ProductTable() {
                 </>
               ) : (
                 <>
-                 <span className="sr-only">UnAvailable</span>
-                <XCircle /></>
-                
+                  <span className="sr-only">Unavailable</span>
+                  <XCircle />
+                </>
               )}
             </TableCell>
             <TableCell>{products.name}</TableCell>
-            <TableCell>{formatCurrency(products.priceInCents /100)}</TableCell>
+            <TableCell>{formatCurrency(products.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(products._count.Order)}</TableCell>
-            <TableCell><MoreVertical/>
-            <span className="sr-only">Actions</span></TableCell>
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <MoreVertical />
+                  <span className="sr-only">Actions</span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  {/* <DropdownMenuItem asChild>
+                    <a
+                      download
+                      href={`/admin/products/${products.id}/download`}
+                    >
+                      Download
+                    </a>
+                  </DropdownMenuItem> */}
+                  <DropdownMenuItem asChild>
+                    <Link href={`/admin/products/${products.id}/edit`}>
+                      Edit
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
