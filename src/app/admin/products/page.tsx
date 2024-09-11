@@ -91,11 +91,11 @@ async function ProductTable() {
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuItem asChild>
+                  {/* <DropdownMenuItem asChild>
                     <a download href={`/admin/products/${products.id}/download`}>
                       Download
                     </a>
-                  </DropdownMenuItem>
+                  </DropdownMenuItem> */}
                   <DropdownMenuItem asChild>
                     <Link href={`/admin/products/${products.id}/edit`}>
                       Edit
