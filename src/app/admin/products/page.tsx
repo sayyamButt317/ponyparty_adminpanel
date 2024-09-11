@@ -19,6 +19,7 @@ import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import {
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 
@@ -89,19 +90,28 @@ async function ProductTable() {
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  {/* <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild>
                     <a
                       download
                       href={`/admin/products/${products.id}/download`}
                     >
                       Download
                     </a>
-                  </DropdownMenuItem> */}
+                  </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href={`/admin/products/${products.id}/edit`}>
                       Edit
                     </Link>
                   </DropdownMenuItem>
+                  <ActiveToggleDropdownItem
+                    id={products.id}
+                    isAvailableForPurchase={products.isAvailableForPurchase}
+                  />
+                  <DropdownMenuSeparator/>
+                  <DeleteDropdownItem
+                    id={products.id}
+                    disabled={products._count.Order > 0}
+                  />
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>

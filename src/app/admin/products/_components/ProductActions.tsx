@@ -1,13 +1,39 @@
-import React from "react";
-import {DropdownMenuItem} from "./../../../../components/ui/dropdown-menu";
-
-
-export  function ActiveToggleDropdownItem({id,
-    isAvailableForPurchase}:{id:string,
-        isAvailableForPurchase:boolean }){
-    return <DropdownMenuItem>
-        
+'use client'
+import React, {  useTransition } from "react";
+import { DropdownMenuItem } from "./../../../../components/ui/dropdown-menu";
+import {deleteProduct, toggleProductAvailability} from "../../_actions/products";
+export function ActiveToggleDropdownItem({
+  id,
+  isAvailableForPurchase,
+}: {
+  id: string;
+  isAvailableForPurchase: boolean;
+}) {
+    const [isPending,startTransition] = useTransition()
+  return <DropdownMenuItem
+  disabled={isPending}
+  onClick={() => {
+        startTransition(async () => {
+          await toggleProductAvailability(id, !isAvailableForPurchase);
+        });
+      }}
+    >
+        {isAvailableForPurchase ? "Deactivate " : "Activate"}
     </DropdownMenuItem>
+  
 }
 
-export function DeleteDropdownItem(){}
+export function DeleteDropdownItem({id,disabled}:{id:string,disabled:boolean}) {
+    const [isPending,startTransition] = useTransition()
+    return <DropdownMenuItem
+    disabled={disabled || isPending}
+    onClick={() => {
+          startTransition(async () => {
+            await deleteProduct(id);
+          });
+        }}
+      >
+          delete
+      </DropdownMenuItem>
+    
+}
