@@ -22,6 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { ActiveToggleDropdownItem, DeleteDropdownItem } from "./_components/ProductActions";
 
 export default function AdminProductsPage() {
   return (
@@ -76,7 +77,7 @@ async function ProductTable() {
               ) : (
                 <>
                   <span className="sr-only">Unavailable</span>
-                  <XCircle />
+                  <XCircle className="stroke-destructive" />
                 </>
               )}
             </TableCell>
@@ -84,17 +85,14 @@ async function ProductTable() {
             <TableCell>{formatCurrency(products.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(products._count.Order)}</TableCell>
             <TableCell>
-              <DropdownMenu>
+            <DropdownMenu>
                 <DropdownMenuTrigger>
                   <MoreVertical />
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
-                    <a
-                      download
-                      href={`/admin/products/${products.id}/download`}
-                    >
+                    <a download href={`/admin/products/${products.id}/download`}>
                       Download
                     </a>
                   </DropdownMenuItem>
@@ -107,7 +105,7 @@ async function ProductTable() {
                     id={products.id}
                     isAvailableForPurchase={products.isAvailableForPurchase}
                   />
-                  <DropdownMenuSeparator/>
+                  <DropdownMenuSeparator />
                   <DeleteDropdownItem
                     id={products.id}
                     disabled={products._count.Order > 0}

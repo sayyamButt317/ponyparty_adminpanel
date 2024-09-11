@@ -33,8 +33,8 @@ export function ProductForm() {
                 {error.description && <div className = "text-destructive ">{error.description}</div>}
             </div>
             <div className="space-y-2">
-                <Label htmlFor="name">File</Label>
-                <Input type="file" id="file" name="fileme" required />
+                <Label htmlFor="file">File</Label>
+                <Input type="file" id="file" name="file" required />
                 {error.file && <div className = "text-destructive ">{error.file}</div>}
             </div>
             <div className="space-y-2">
