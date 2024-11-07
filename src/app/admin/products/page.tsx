@@ -1,8 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { PageHeader } from "../_component/PageHeader";
-import Link from "next/link";
-import db from "@/db/db";
+import { Button } from "@/components/ui/button";  // Importing button component for UI
+import { PageHeader } from "../_component/PageHeader";  // Importing page header component
+import Link from "next/link";  // Importing Next.js link component for client-side navigation
+import db from "@/db/db";  // Importing database instance to interact with the database
 
+// Importing table and related components for displaying product data in a table format
 import {
   Table,
   TableBody,
@@ -12,9 +13,10 @@ import {
   TableCell,
 } from "@/components/ui/table";
 
-import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
-import { formatCurrency, formatNumber } from "@/lib/formatters";
+import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";  // Importing icons for status and actions
+import { formatCurrency, formatNumber } from "@/lib/formatters";  // Importing formatting functions for currency and numbers
 
+// Importing dropdown menu and related components for product actions
 import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import {
   DropdownMenuContent,
@@ -22,22 +24,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
-import { ActiveToggleDropdownItem, DeleteDropdownItem } from "./_components/ProductActions";
+import { ActiveToggleDropdownItem, DeleteDropdownItem } from "./_components/ProductActions";  // Importing custom dropdown items for toggling availability and deleting products
 
+// AdminProductsPage component: displays the product header and an "Add Product" button
 export default function AdminProductsPage() {
   return (
     <>
       <div className="flex justify-between items-center gap-4">
-        <PageHeader>Products</PageHeader>
+        <PageHeader>Products</PageHeader>  {/* Page header for "Products" */}
         <Button asChild>
-          <Link href="/admin/products/new">Add Product</Link>
+          <Link href="/admin/products/new">Add Product</Link>  {/* Button linking to new product form */}
         </Button>
       </div>
-      <ProductTable />
+      <ProductTable />  {/* Renders the product table */}
     </>
   );
 }
 
+// ProductTable component: retrieves and displays a list of products in a table
 async function ProductTable() {
   const products = await db.product.findMany({
     select: {
@@ -45,70 +49,75 @@ async function ProductTable() {
       name: true,
       priceInCents: true,
       isAvailableForPurchase: true,
-      _count: { select: { Order: true } },
+      _count: { select: { Order: true } },  // Counting the number of orders for each product
     },
-    orderBy: { name: "asc" },
+    orderBy: { name: "asc" },  // Sorting products alphabetically by name
   });
-  if (products.length === 0) return <p>No Products Found</p>;
+
+  if (products.length === 0) return <p>No Products Found</p>;  // Display message if no products are available
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
           <TableHead className="w-0">
-            <span className="sr-only">Available For Purchase</span>
+            <span className="sr-only">Available For Purchase</span>  {/* Hidden header for accessibility */}
           </TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Price</TableHead>
           <TableHead>Orders</TableHead>
           <TableHead className="w-0">
-            <span className="sr-only">Actions</span>
+            <span className="sr-only">Actions</span>  {/* Hidden header for accessibility */}
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {products.map((products) => (
-          <TableRow key={products.id}>
+        {products.map((product) => (
+          <TableRow key={product.id}>
+            {/* Availability icon with screen-reader text */}
             <TableCell>
-              {products.isAvailableForPurchase ? (
+              {product.isAvailableForPurchase ? (
                 <>
                   <span className="sr-only">Available</span>
-                  <CheckCircle2 />
+                  <CheckCircle2 />  {/* Available icon */}
                 </>
               ) : (
                 <>
                   <span className="sr-only">Unavailable</span>
-                  <XCircle className="stroke-destructive" />
+                  <XCircle className="stroke-destructive" />  {/* Unavailable icon */}
                 </>
               )}
             </TableCell>
-            <TableCell>{products.name}</TableCell>
-            <TableCell>{formatCurrency(products.priceInCents / 100)}</TableCell>
-            <TableCell>{formatNumber(products._count.Order)}</TableCell>
+            {/* Displaying product name */}
+            <TableCell>{product.name}</TableCell>
+            {/* Displaying product price formatted as currency */}
+            <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
+            {/* Displaying the number of orders */}
+            <TableCell>{formatNumber(product._count.Order)}</TableCell>
+            {/* Action menu for editing, toggling, or deleting product */}
             <TableCell>
-            <DropdownMenu>
+              <DropdownMenu>
                 <DropdownMenuTrigger>
                   <MoreVertical />
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  {/* <DropdownMenuItem asChild>
-                    <a download href={`/admin/products/${products.id}/download`}>
-                      Download
-                    </a>
-                  </DropdownMenuItem> */}
+                  {/* Edit product link */}
                   <DropdownMenuItem asChild>
-                    <Link href={`/admin/products/${products.id}/edit`}>
+                    <Link href={`/admin/products/${product.id}/edit`}>
                       Edit
                     </Link>
                   </DropdownMenuItem>
+                  {/* Toggle product availability */}
                   <ActiveToggleDropdownItem
-                    id={products.id}
-                    isAvailableForPurchase={products.isAvailableForPurchase}
+                    id={product.id}
+                    isAvailableForPurchase={product.isAvailableForPurchase}
                   />
-                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator />  {/* Separator line */}
+                  {/* Delete product item, disabled if product has orders */}
                   <DeleteDropdownItem
-                    id={products.id}
-                    disabled={products._count.Order > 0}
+                    id={product.id}
+                    disabled={product._count.Order > 0}
                   />
                 </DropdownMenuContent>
               </DropdownMenu>
