@@ -9,15 +9,15 @@ export default function AdminLayout({
 }>) {
   return (
     <>
-         <Nav>
+         {/* <Nav>
         <NavLink href="/admin">Dashboard</NavLink>
         <NavLink href="/admin/products">Products</NavLink>
         <NavLink href="/admin/users">Customer</NavLink>
         <NavLink href="/admin/orders">Sales</NavLink>
-      </Nav>
-      {/* <Sidebar />  */}
+      </Nav> */}
+      <Sidebar /> 
  
-      <div className="container my-6">{children}</div>
+      {/* <div className="container my-6">{children}</div> */}
     </>
   );
 }

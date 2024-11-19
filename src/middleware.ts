@@ -21,6 +21,7 @@ async function isAuthenticated(req: NextRequest) {
 
     // Decode the base64 encoded username and password from the header
     const [username, password] = Buffer.from(authHeader.split(" ")[1], "base64").toString().split(":");
+    console.log(username,password)
 
     // Check if the provided password matches the stored hashed password
     isValidPassword(password, "sdfdsf");  // Example usage of isValidPassword (replace "sdfdsf" as necessary)
