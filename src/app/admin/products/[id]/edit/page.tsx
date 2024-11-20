@@ -1,4 +1,4 @@
-import db from "@/db/db";
+import db from "@/db/dbConnect";
 import { PageHeader } from "../../../_component/PageHeader";
 import { ProductForm } from "../../_components/ProductForm";
 

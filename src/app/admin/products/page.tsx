@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";  // Importing button component for UI
 import { PageHeader } from "../_component/PageHeader";  // Importing page header component
 import Link from "next/link";  // Importing Next.js link component for client-side navigation
-import db from "@/db/db";  // Importing database instance to interact with the database
+import db from "@/db/dbConnect";  // Importing database instance to interact with the database
 
 // Importing table and related components for displaying product data in a table format
 import {

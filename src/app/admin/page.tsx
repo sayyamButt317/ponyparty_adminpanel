@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";  // Import Card components for displaying dashboard data
-import db from "@/db/db";  // Import database connection
+import db from "@/db/dbConnect";  // Import database connection
 import { formatCurrency, formatNumber } from "@/lib/formatters";  // Import helper functions for formatting
 
 // Fetch sales data by aggregating total price and sales count from the orders

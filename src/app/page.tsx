@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";  // Import Link component for internal navigation
 import Image from "next/image";  // Import Image component for optimized image loading
 import { ProductCard } from "@/components/ProductCard";  // Import custom ProductCard component
-import db from "@/db/db";  // Import database connection or instance
+import db from "@/db/dbConnect";  // Import database connection or instance
 import { Product } from "@prisma/client";  // Import Product type from Prisma schema
 import "./globals.css";  
 
